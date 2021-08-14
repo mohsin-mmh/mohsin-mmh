@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>Covid-19 Tracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet"
+  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+</head>
+
+<body>
+
+<div class = row style="margin-bottom:0">
+	<ul>
+  		<li><a class="active" href="#home">Global Covid-19 Tracker</a></li>
+  		<li><a href="#news">Worldometer</a></li>
+  		<li><a href="#contact">Contact</a></li>
+  		
+	</ul>
+    
+</div>
+
+<section>
+  <div class="h1 text-center">
+    <h1> Covid-19 Global Tracker </h1>
+  </div>
+</section>
+
+<section>
+  <div class="col-md-12 text-center">
+    <form action="/action_page.php">
+      <label for="dates" style= "color: grey;">Choose a date:</label>
+      <select name="dates">
+        {% for d in dates %}
+        <option value={{d}}>{{d}}</option>
+        {% endfor %}
+      </select>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</section>
+
+<section>
+  <div class = "row" style= "height: 400px;">
+    <div class="col-6">
+      <h3 style = "color: grey"> Total Cases per day by Top Ten Countries</h3>
+      <canvas id="graph1" width="600" height="300"></canvas>
+    </div>
+    <div class="col-6">
+      <h3 style = "color: grey"> New Cases per day by Top Ten Countries</h3>
+      <canvas id="graph2" width="600" height="300"></canvas>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class = "row" style= "height: 400px;">
+    <div class="col-6">
+      <h3 style = "color: grey"> Total Deaths per day by Top Ten Countries</h3>
+      <canvas id="graph3" width="600" height="300"></canvas>
+    </div>
+    <div class="col-6">
+      <h3 style = "color: grey"> New Deaths per day by Top Ten Countries</h3>
+      <canvas id="graph4" width="600" height="300"></canvas>
+    </div>
+  </div>
+</section>
+
+<script>
+  var ctx = document.getElementById("graph1");
+  var lineChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: {{labels1 | safe}},
+      datasets: [{
+          label: "Total Cases",
+          data: {{values1 | safe}},
+          fill: false,
+          borderColor: 'rgb(213, 0, 0)',
+          tension: 0.1
+        }]
+      },
+      options: {responsive: false}
+    });     
+</script>
+  
+<script>
+var ctx = document.getElementById("graph2");
+var barChart = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: {{labels2 | safe}},
+    datasets: [
+      {
+        label: "New Cases",
+        data: {{values2 | safe}},
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 208, 0.2)',
+          'rgba(240, 212, 152, 0.2)',
+          'rgba(240, 168, 228, 0.2)',
+          'rgba(211, 168, 241, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)',
+          'rgb(240, 212, 151)',
+          'rgb(240, 168, 227)',
+          'rgb(211, 168, 240)'
+        ],
+        borderWidth: 0.5       
+      }]
+  },
+  options: {
+    responsive:false
+  }
+  });
+</script>
+
+<script>
+var ctx = document.getElementById("graph3");
+var barChart = new Chart(ctx, {
+  type: "doughnut",
+  data: {
+    labels: {{labels3 | safe}},
+    datasets: [
+      {
+        label: "Total Deaths",
+        data: {{values3 | safe}},
+        backgroundColor: [
+          'rgba(211, 47, 47, 0.2)',
+          'rgba(255, 64, 129, 0.2)',
+          'rgba(230, 74, 25, 0.1)',
+          'rgba(255, 152, 0, 0.2)',
+          'rgba(255, 193, 7, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 208, 0.2)',
+          'rgba(240, 212, 152, 0.2)',
+          'rgba(240, 168, 228, 0.2)',
+          'rgba(211, 168, 241, 0.2)'
+        ],
+        borderColor: [
+          'rgb(211, 47, 47)',
+          'rgb(255, 64, 129)',
+          'rgb(230, 74, 25)',
+          'rgb(255, 152, 0)',
+          'rgb(255, 193, 7)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)',
+          'rgb(240, 212, 151)',
+          'rgb(240, 168, 227)',
+          'rgb(211, 168, 240)'
+        ],
+        borderWidth: 0.5       
+      }]
+  },
+  options: {
+    responsive:false
+  }
+  });
+</script> 
+
+<script>
+var ctx = document.getElementById("graph4");
+var barChart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: {{labels4 | safe}},
+    datasets: [
+      {
+        label: "New Deaths",
+        data: {{values4 | safe}},
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 208, 0.2)',
+          'rgba(240, 212, 152, 0.2)',
+          'rgba(240, 168, 228, 0.2)',
+          'rgba(211, 168, 241, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)',
+          'rgb(240, 212, 151)',
+          'rgb(240, 168, 227)',
+          'rgb(211, 168, 240)'
+        ],
+        borderWidth: 0.5       
+      }]
+  },
+  options: {
+    responsive:false
+  }
+  });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+</body>
+
+</html>

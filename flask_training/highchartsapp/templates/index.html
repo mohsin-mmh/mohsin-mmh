@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+  <title>World Bank Data Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet"
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  
+
+</head>
+
+<body>
+
+<div class = "row nav" style="margin-bottom:40px">
+	<ul>
+  		<li><a class="active" href="#home">World Bank Data Dashboard</a></li>
+  		<li><a href="#news">Made for Data Science Project</a></li>
+  		<li><a href="#contact">Contact</a></li>
+  		
+	</ul>
+    
+</div>
+
+<div class="h1 text-center" style="margin-bottom: 0">
+  <h1> World Bank Data Dashboard</h1>
+</div>
+
+<div class="col-md-12 text-center">
+	<form action="/action_page.php">
+  		<div class="form-group">
+    		<input type="search" class="form-control" placeholder="Enter a message to classify">
+  	</form> 
+	<button type="button" class="btn1 btn-success" style="margin-bottom:20px">Classify Message</button>
+    <h5> Message </h5>
+  <p> We are more than 50 people sleeping on the street. Please help us find tent, food.<p>
+</div>
+
+<table id="table2">
+  <h5> Top 10 Countries Data </h5>
+  <tr>
+    {% for header in headings %}
+    <th style="font-size:150%; background-color: #4CAF50; color: white">{{ header }}</th>
+    {% endfor %}
+  </tr>
+
+  {% for row in data %}
+  <tr>
+    {% for cell in row %}
+    <td>{{cell}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+
+<div class="row">
+  <div class="col-6">
+    <canvas id="scatterchart" width="600" height="300" style="border: 1px solid #9E9E9E"></canvas>
+  </div>
+  <div class="col-6">
+    <canvas id="barChart" width="600" height="300" style="border: 1px solid #9E9E9E"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-2.3.0.min.js"></script>
+<script>
+  
+  var fig2 = {{data2 | safe}};
+  Plotly.newPlot("scatterchart", fig2, {})
+  console.log(fig2)
+</script>
+
+<script>
+var ctx = document.getElementById("barChart");
+var barChart = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: {{labels | safe}},
+    datasets: [
+      {
+        label: "hectaresarablelandperperson",
+        data: {{values | safe}},
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 208, 0.2)',
+          'rgba(240, 212, 152, 0.2)',
+          'rgba(240, 168, 228, 0.2)',
+          'rgba(211, 168, 241, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)',
+          'rgb(240, 212, 151)',
+          'rgb(240, 168, 227)',
+          'rgb(211, 168, 240)'
+        ],
+        borderWidth: 0.5       
+      }]
+  },
+  options: {
+    responsive:false
+  }
+  });      
+</script>
+
+</body>
+
+</html>

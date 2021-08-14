@@ -1,0 +1,83 @@
+.row {
+    height: 50px;
+    background: whitesmoke;
+    color: white
+    }
+
+.row1 {
+  height: 400px;
+  background: black;
+  color: white
+  }
+  
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  }
+  
+  li {
+  float: left;
+	}
+    
+  li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+    
+  .h1{
+  	margin-bottom: 0;
+    height: 100px;
+    font-size: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: whitesmoke;
+    font-weight: bold;
+    color: grey;
+  }
+  
+  .jumbotronp{
+    height: 50px;
+    background: #e0e0e0;
+    color: black
+  }
+  
+  .col-md-12{
+    height: 100px;
+    background: whitesmoke;
+    color: white;	
+    }
+    
+  .btn1{
+    background: #3e8e41;
+    color: white
+  }
+  
+  .form-control{
+  	margin: auto;
+    width: 80%	
+  }
+  
+  
+  table, td, th {
+  width: 90%;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f1f8e9;
+  border-color: #e0e0e0;
+  font-style: italic;
+  font-weight: normal
+  }
+  
+  #table2 {
+  border-collapse: collapse;
+  }
