@@ -14,6 +14,7 @@ def cleandata(dataset, keepcolumns):
 
 def date_list():
     covid_df = cleandata('data/owid-covid-data.csv', ['location', 'date'])
+    covid_df.sort_values('date', ascending=True, inplace=True)
     covid_dates = covid_df.date.unique().tolist()
     return covid_dates
 
@@ -49,6 +50,24 @@ def graph4(date):
     covid_df = covid_df[covid_df.date == date]
     covid_df.sort_values('new_deaths', ascending=False, inplace=True)
     covid_df = covid_df.nlargest(20,'new_deaths')
+    covid_df = covid_df.to_json(orient='records')
+    #json_df = js.loads(covid_df)
+    return covid_df
+
+def graph5(date):
+    covid_df = cleandata('data/owid-covid-data.csv',['location', 'date', 'total_vaccinations'])
+    covid_df = covid_df[covid_df.date == date]
+    covid_df.sort_values('total_vaccinations', ascending=False, inplace=True)
+    covid_df = covid_df.nlargest(20,'total_vaccinations')
+    covid_df = covid_df.to_json(orient='records')
+    #json_df = js.loads(covid_df)
+    return covid_df
+
+def graph6(date):
+    covid_df = cleandata('data/owid-covid-data.csv',['location', 'date', 'people_vaccinated'])
+    covid_df = covid_df[covid_df.date == date]
+    covid_df.sort_values('people_vaccinated', ascending=False, inplace=True)
+    covid_df = covid_df.nlargest(20,'people_vaccinated')
     covid_df = covid_df.to_json(orient='records')
     #json_df = js.loads(covid_df)
     return covid_df
